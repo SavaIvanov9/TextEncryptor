@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace TextEncryptor.Engine
+﻿namespace TextEncryptor.Engine
 {
+    using System;
+    using Commands;
+
     public class Core
     {
         private static Core _instance;

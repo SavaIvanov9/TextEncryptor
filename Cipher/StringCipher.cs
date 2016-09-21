@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace TextEncryptor.Cipher
+﻿namespace TextEncryptor.Cipher
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+
     public static class StringCipher
     {
         // This constant is used to determine the keysize of the encryption algorithm in bits.

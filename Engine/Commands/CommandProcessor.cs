@@ -1,7 +1,9 @@
-﻿using System;
-
-namespace TextEncryptor.Engine.Commands
+﻿namespace TextEncryptor.Engine.Commands
 {
+    using System;
+    using System.Text;
+    using Cipher;
+
     public class CommandProcessor
     {
         private static CommandProcessor _instance;
@@ -47,7 +49,35 @@ namespace TextEncryptor.Engine.Commands
             }
         }
 
-        private void ClearConsole()
+        private void EncryptString()
+        {
+            Console.WriteLine("Enter a password to use:");
+            string password = Console.ReadLine();
+            Console.WriteLine("Enter a string to encrypt:");
+            string text = Console.ReadLine();
+            Console.WriteLine();
+
+            Console.WriteLine("Your encrypted string is:");
+            string encryptedstring = StringCipher.Encrypt(text, password);
+            Console.WriteLine(encryptedstring);
+            Console.WriteLine("");
+        }
+
+        private void DecryptString()
+        {
+            Console.WriteLine("Enter a password to use:");
+            string password = Console.ReadLine();
+            Console.WriteLine("Enter a string to decrypt:");
+            string text = Console.ReadLine();
+            Console.WriteLine("");
+
+            Console.WriteLine("Your decrypted string is:");
+            string decryptedstring = StringCipher.Decrypt(text, password);
+            Console.WriteLine(decryptedstring);
+            Console.WriteLine("");
+        }
+
+        private void EncryptTxtFile()
         {
             throw new NotImplementedException();
         }
@@ -57,24 +87,24 @@ namespace TextEncryptor.Engine.Commands
             throw new NotImplementedException();
         }
 
-        private void EncryptTxtFile()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void DecryptString()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void EncryptString()
-        {
-            throw new NotImplementedException();
-        }
-
         private void DisplayCommands()
         {
-            throw new NotImplementedException();
+            StringBuilder commandsDescription = new StringBuilder();
+
+            commandsDescription.AppendLine("--------------------------------" + Environment.NewLine +
+                                           "COMMANDS: " + Environment.NewLine +
+                                           "encrypt string" + Environment.NewLine +
+                                           "decrypt string" + Environment.NewLine +
+                                           "encrypt txt file" + Environment.NewLine +
+                                           "decrypt txt file" + Environment.NewLine +
+                                           "--------------------------------");
+
+            Console.Write(commandsDescription);
+        }
+
+        private void ClearConsole()
+        {
+            Console.Clear();
         }
     }
 }
