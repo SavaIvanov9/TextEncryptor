@@ -98,12 +98,10 @@ namespace TextEncryptor.Engine.Commands
                 {
                     text.Add(new List<string>(line.Split(' ')).Select(
                         t => StringCipher.Encrypt(t, password)).ToList());
-                    
+
                     line = reader.ReadLine();
                 }
             }
-
-            
 
             CheckDirectory("EncryptedFiles");
             DirectoryInfo dir = new DirectoryInfo(".");
@@ -111,7 +109,7 @@ namespace TextEncryptor.Engine.Commands
             string newFilePath = Path.Combine(dirName, "EncryptedFiles");
             string newFileName = "";
 
-            if (path.Contains(@"\"))
+            if (path != null && path.Contains(@"\"))
             {
                 newFileName = path.Substring(path.LastIndexOf(@"\", StringComparison.Ordinal) + 1);
             }
@@ -119,7 +117,7 @@ namespace TextEncryptor.Engine.Commands
             {
                 newFileName = path;
             }
-            
+
             if (!CheckFile(newFilePath, newFileName))
             {
                 using (StreamWriter file = File.CreateText(Path.Combine(newFilePath, newFileName)))
@@ -136,26 +134,6 @@ namespace TextEncryptor.Engine.Commands
             {
                 Console.WriteLine("file alredy exists");
             }
-        }
-
-        private void CheckDirectory(string name)
-        {
-            DirectoryInfo dir = new DirectoryInfo(".");
-            String dirName = dir.FullName;
-            string pathString = System.IO.Path.Combine(dirName, name);
-
-            if (!Directory.Exists(pathString))
-            {
-                Directory.CreateDirectory(pathString);
-            }
-        }
-
-        private bool CheckFile(string directory, string file)
-        {
-            string[] filePaths = Directory.GetFiles(directory, "*.txt");
-            string[] fileNames = filePaths.Select(x => x.Substring(x.LastIndexOf(@"\", StringComparison.Ordinal) + 1)).ToArray();
-
-            return fileNames.Contains(file);
         }
 
         private char[,] ReadMap(string path)
@@ -203,7 +181,57 @@ namespace TextEncryptor.Engine.Commands
 
         private void DecryptTxtFile()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Enter file path:");
+            string path = Console.ReadLine();
+            Console.WriteLine("Enter password:");
+            string password = Console.ReadLine();
+
+            List<List<string>> text = new List<List<string>>();
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line = reader.ReadLine();
+
+                while (line != null)
+                {
+                    text.Add(new List<string>(line.Split(' ')).Select(
+                        t => StringCipher.Decrypt(t, password)).ToList());
+
+                    line = reader.ReadLine();
+                }
+            }
+
+            CheckDirectory("DecryptedFiles");
+            DirectoryInfo dir = new DirectoryInfo(".");
+            String dirName = dir.FullName;
+            string newFilePath = Path.Combine(dirName, "DecryptedFiles");
+            string newFileName = "";
+
+            if (path != null && path.Contains(@"\"))
+            {
+                newFileName = path.Substring(path.LastIndexOf(@"\", StringComparison.Ordinal) + 1);
+            }
+            else
+            {
+                newFileName = path;
+            }
+
+            if (!CheckFile(newFilePath, newFileName))
+            {
+                using (StreamWriter file = File.CreateText(Path.Combine(newFilePath, newFileName)))
+                {
+                    for (int i = 0; i < text.Count; i++)
+                    {
+                        file.WriteLine(string.Join(" ", text[i]));
+                    }
+
+                    Console.WriteLine($"File {newFileName} decrypted.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("file alredy exists");
+            }
         }
 
         private void DisplayCommands()
@@ -224,6 +252,26 @@ namespace TextEncryptor.Engine.Commands
         private void ClearConsole()
         {
             Console.Clear();
+        }
+
+        private void CheckDirectory(string name)
+        {
+            DirectoryInfo dir = new DirectoryInfo(".");
+            String dirName = dir.FullName;
+            string pathString = System.IO.Path.Combine(dirName, name);
+
+            if (!Directory.Exists(pathString))
+            {
+                Directory.CreateDirectory(pathString);
+            }
+        }
+
+        private bool CheckFile(string directory, string file)
+        {
+            string[] filePaths = Directory.GetFiles(directory, "*.txt");
+            string[] fileNames = filePaths.Select(x => x.Substring(x.LastIndexOf(@"\", StringComparison.Ordinal) + 1)).ToArray();
+
+            return fileNames.Contains(file);
         }
     }
 }
