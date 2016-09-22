@@ -25,7 +25,7 @@ namespace TextEncryptor.Engine.Commands
             }
         }
 
-        public void ProcessCommand(string command, string[] commandParams)
+        public void ProcessCommand(string command)
         {
             switch (command)
             {
@@ -127,12 +127,12 @@ namespace TextEncryptor.Engine.Commands
                         file.WriteLine(string.Join(" ", text[i]));
                     }
 
-                    Console.WriteLine($"File {newFileName} encrypted.");
+                    Console.WriteLine($"File {newFileName} encrypted in folder EncryptedFiles.");
                 }
             }
             else
             {
-                Console.WriteLine("file alredy exists");
+                Console.WriteLine("File alredy exists.");
             }
         }
 
@@ -182,12 +182,12 @@ namespace TextEncryptor.Engine.Commands
                         file.WriteLine(string.Join(" ", text[i]));
                     }
 
-                    Console.WriteLine($"File {newFileName} decrypted.");
+                    Console.WriteLine($"File {newFileName} decrypted in folder DecryptedFiles.");
                 }
             }
             else
             {
-                Console.WriteLine("file alredy exists");
+                Console.WriteLine("File alredy exists.");
             }
         }
 
@@ -195,13 +195,14 @@ namespace TextEncryptor.Engine.Commands
         {
             StringBuilder commandsDescription = new StringBuilder();
 
-            commandsDescription.AppendLine("--------------------------------" + Environment.NewLine +
+            commandsDescription.AppendLine("------------------------------------------" + Environment.NewLine +
                                            "COMMANDS: " + Environment.NewLine +
-                                           "encrypt string" + Environment.NewLine +
-                                           "decrypt string" + Environment.NewLine +
-                                           "encrypt txt file" + Environment.NewLine +
-                                           "decrypt txt file" + Environment.NewLine +
-                                           "--------------------------------");
+                                           "encrypt string - Encrypts input string" + Environment.NewLine +
+                                           "decrypt string - Decrypts input string" + Environment.NewLine +
+                                           "encrypt txt file - Encrypts whole txt file" + Environment.NewLine +
+                                           "decrypt txt file - Decrypts whole txt file" + Environment.NewLine +
+                                           "clear - Clears console" + Environment.NewLine +
+                                           "------------------------------------------");
 
             Console.Write(commandsDescription);
         }
@@ -215,7 +216,7 @@ namespace TextEncryptor.Engine.Commands
         {
             DirectoryInfo dir = new DirectoryInfo(".");
             String dirName = dir.FullName;
-            string pathString = System.IO.Path.Combine(dirName, name);
+            string pathString = Path.Combine(dirName, name);
 
             if (!Directory.Exists(pathString))
             {

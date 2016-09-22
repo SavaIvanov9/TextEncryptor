@@ -29,18 +29,15 @@ namespace TextEncryptor.Engine
             Console.Title = "Encryptor";
 
             Console.WriteLine("Enter command:");
-            var commandLine = Console.ReadLine();
+            var command = Console.ReadLine();
 
-            while (commandLine != "end")
+            while (command != "end")
             {
-                if (!string.IsNullOrEmpty(commandLine))
+                if (!string.IsNullOrEmpty(command))
                 {
-                    var commandParts = commandLine.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
-                    var command = commandParts[0];
-
                     try
                     {
-                        CommandProcessor.Instance.ProcessCommand(command, commandParts);
+                        CommandProcessor.Instance.ProcessCommand(command);
                     }
                     catch (FileNotFoundException)
                     {
@@ -53,7 +50,7 @@ namespace TextEncryptor.Engine
                 }
 
                 Console.WriteLine("Enter command:");
-                commandLine = Console.ReadLine();
+                command= Console.ReadLine();
             }
         }
     }
