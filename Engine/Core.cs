@@ -1,4 +1,6 @@
-﻿namespace TextEncryptor.Engine
+﻿using System.IO;
+
+namespace TextEncryptor.Engine
 {
     using System;
     using Commands;
@@ -36,7 +38,14 @@
                     var commandParts = commandLine.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries);
                     var command = commandParts[0];
 
-                    CommandProcessor.Instance.ProcessCommand(command, commandParts);
+                    try
+                    {
+                        CommandProcessor.Instance.ProcessCommand(command, commandParts);
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        Console.WriteLine("File not found.");
+                    }
                 }
                 else
                 {
