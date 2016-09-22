@@ -1,4 +1,8 @@
-﻿namespace TextEncryptor.Engine.Commands
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace TextEncryptor.Engine.Commands
 {
     using System;
     using System.Text;
@@ -79,7 +83,122 @@
 
         private void EncryptTxtFile()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Enter file path:");
+            string path = Console.ReadLine();
+            Console.WriteLine("Enter password:");
+            string password = Console.ReadLine();
+
+            List<List<string>> text = new List<List<string>>();
+
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line = reader.ReadLine();
+
+                while (line != null)
+                {
+                    text.Add(new List<string>(line.Split(' ')).Select(
+                        t => StringCipher.Encrypt(t, password)).ToList());
+                    
+                    line = reader.ReadLine();
+                }
+            }
+
+            
+
+            CheckDirectory("EncryptedFiles");
+            DirectoryInfo dir = new DirectoryInfo(".");
+            String dirName = dir.FullName;
+            string newFilePath = Path.Combine(dirName, "EncryptedFiles");
+            string newFileName = "";
+
+            if (path.Contains(@"\"))
+            {
+                newFileName = path.Substring(path.LastIndexOf(@"\", StringComparison.Ordinal) + 1);
+            }
+            else
+            {
+                newFileName = path;
+            }
+            
+            if (!CheckFile(newFilePath, newFileName))
+            {
+                using (StreamWriter file = File.CreateText(Path.Combine(newFilePath, newFileName)))
+                {
+                    for (int i = 0; i < text.Count; i++)
+                    {
+                        file.WriteLine(string.Join(" ", text[i]));
+                    }
+
+                    Console.WriteLine($"File {newFileName} encrypted.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("file alredy exists");
+            }
+        }
+
+        private void CheckDirectory(string name)
+        {
+            DirectoryInfo dir = new DirectoryInfo(".");
+            String dirName = dir.FullName;
+            string pathString = System.IO.Path.Combine(dirName, name);
+
+            if (!Directory.Exists(pathString))
+            {
+                Directory.CreateDirectory(pathString);
+            }
+        }
+
+        private bool CheckFile(string directory, string file)
+        {
+            string[] filePaths = Directory.GetFiles(directory, "*.txt");
+            string[] fileNames = filePaths.Select(x => x.Substring(x.LastIndexOf(@"\", StringComparison.Ordinal) + 1)).ToArray();
+
+            return fileNames.Contains(file);
+        }
+
+        private char[,] ReadMap(string path)
+        {
+            StreamReader reader = new StreamReader(path);
+
+            using (reader)
+            {
+                int lineNumber = 0;
+                string line = reader.ReadLine();
+
+                int cols = line.Length;
+
+                List<string> elements = new List<string>();
+
+                while (line != null)
+                {
+                    elements.Add(line);
+                    lineNumber++;
+                    line = reader.ReadLine();
+                }
+
+                int rows = lineNumber;
+                char[,] mapMatrix = new char[rows, cols];
+
+                int counterRows = 0;
+                int counterCols = 0;
+
+                for (int row = 0; row < rows; row++)
+                {
+                    for (int col = 0; col < cols; col++)
+                    {
+                        if (counterCols == cols)
+                            counterCols = 0;
+
+                        mapMatrix[row, col] = elements[counterRows][counterCols];
+                        counterCols++;
+                    }
+                    counterRows++;
+                }
+                return mapMatrix;
+            }
+
         }
 
         private void DecryptTxtFile()

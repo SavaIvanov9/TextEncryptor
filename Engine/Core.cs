@@ -26,7 +26,7 @@
             Console.BackgroundColor = ConsoleColor.Black;
             Console.Title = "Encryptor";
 
-            Console.WriteLine("Enter command :");
+            Console.WriteLine("Enter command:");
             var commandLine = Console.ReadLine();
 
             while (commandLine != "end")
@@ -43,7 +43,7 @@
                     Console.WriteLine(@"Unknown command. Type ""help"" for a list of commands.");
                 }
 
-                Console.WriteLine("Enter command :");
+                Console.WriteLine("Enter command:");
                 commandLine = Console.ReadLine();
             }
         }

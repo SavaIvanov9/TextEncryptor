@@ -1,2 +1,6 @@
 C:\Users\vivacom.bg\Desktop\Area-51\TextEncryptor\TextEncryptor\bin\Debug\TextEncryptor.exe.config
 C:\Users\vivacom.bg\Desktop\Area-51\TextEncryptor\TextEncryptor\obj\Debug\TextEncryptor.csprojResolveAssemblyReference.cache
+C:\Users\vivacom.bg\Desktop\Area-51\TextEncryptor\TextEncryptor\bin\Debug\TextEncryptor.exe
+C:\Users\vivacom.bg\Desktop\Area-51\TextEncryptor\TextEncryptor\bin\Debug\TextEncryptor.pdb
+C:\Users\vivacom.bg\Desktop\Area-51\TextEncryptor\TextEncryptor\obj\Debug\TextEncryptor.exe
+C:\Users\vivacom.bg\Desktop\Area-51\TextEncryptor\TextEncryptor\obj\Debug\TextEncryptor.pdb
