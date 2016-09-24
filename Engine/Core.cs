@@ -43,6 +43,10 @@ namespace TextEncryptor.Engine
                     {
                         Console.WriteLine("File not found.");
                     }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
                 else
                 {
