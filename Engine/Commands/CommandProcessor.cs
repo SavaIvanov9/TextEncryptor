@@ -96,8 +96,15 @@ namespace TextEncryptor.Engine.Commands
 
                 while (line != null)
                 {
-                    text.Add(new List<string>(line.Split(' ')).Select(
-                        t => StringCipher.Encrypt(t, password)).ToList());
+                    if (line == "")
+                    {
+                        text.Add(new List<string> {""});
+                    }
+                    else
+                    {
+                        text.Add(new List<string>(line.Split(' ')).Select(
+                            t => StringCipher.Encrypt(t, password)).ToList());
+                    }
 
                     line = reader.ReadLine();
                 }
@@ -134,6 +141,57 @@ namespace TextEncryptor.Engine.Commands
             {
                 Console.WriteLine("File alredy exists.");
             }
+
+            //Console.WriteLine("Enter file path:");
+            //string path = Console.ReadLine();
+            //Console.WriteLine("Enter password:");
+            //string password = Console.ReadLine();
+
+            //List<string> text = new List<string>();
+
+            //using (StreamReader reader = new StreamReader(path))
+            //{
+            //    string line = reader.ReadLine();
+
+            //    while (line != null)
+            //    {
+            //        text.Add(StringCipher.Encrypt(line, password));
+
+            //        line = reader.ReadLine();
+            //    }
+            //}
+
+            //CheckDirectory("EncryptedFiles");
+            //DirectoryInfo dir = new DirectoryInfo(".");
+            //String dirName = dir.FullName;
+            //string newFilePath = Path.Combine(dirName, "EncryptedFiles");
+            //string newFileName = "";
+
+            //if (path != null && path.Contains(@"\"))
+            //{
+            //    newFileName = path.Substring(path.LastIndexOf(@"\", StringComparison.Ordinal) + 1);
+            //}
+            //else
+            //{
+            //    newFileName = path;
+            //}
+
+            //if (!CheckFile(newFilePath, newFileName))
+            //{
+            //    using (StreamWriter file = File.CreateText(Path.Combine(newFilePath, newFileName)))
+            //    {
+            //        for (int i = 0; i < text.Count; i++)
+            //        {
+            //            file.WriteLine(string.Join(" ", text[i]));
+            //        }
+
+            //        Console.WriteLine($"File {newFileName} encrypted in folder EncryptedFiles.");
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine("File alredy exists.");
+            //}
         }
 
         private void DecryptTxtFile()
@@ -151,9 +209,16 @@ namespace TextEncryptor.Engine.Commands
 
                 while (line != null)
                 {
-                    text.Add(new List<string>(line.Split(' ')).Select(
+                    if (line == "")
+                    {
+                        text.Add(new List<string> {""});
+                    }
+                    else
+                    {
+                        text.Add(new List<string>(line.Split(' ')).Select(
                         t => StringCipher.Decrypt(t, password)).ToList());
-
+                    }
+                    
                     line = reader.ReadLine();
                 }
             }
@@ -189,6 +254,56 @@ namespace TextEncryptor.Engine.Commands
             {
                 Console.WriteLine("File alredy exists.");
             }
+            //Console.WriteLine("Enter file path:");
+            //string path = Console.ReadLine();
+            //Console.WriteLine("Enter password:");
+            //string password = Console.ReadLine();
+
+            //List<string> text = new List<string>();
+
+            //using (StreamReader reader = new StreamReader(path))
+            //{
+            //    string line = reader.ReadLine();
+
+            //    while (line != null)
+            //    {
+            //        text.Add(StringCipher.Decrypt(line, password));
+
+            //        line = reader.ReadLine();
+            //    }
+            //}
+
+            //CheckDirectory("DecryptedFiles");
+            //DirectoryInfo dir = new DirectoryInfo(".");
+            //String dirName = dir.FullName;
+            //string newFilePath = Path.Combine(dirName, "DecryptedFiles");
+            //string newFileName = "";
+
+            //if (path != null && path.Contains(@"\"))
+            //{
+            //    newFileName = path.Substring(path.LastIndexOf(@"\", StringComparison.Ordinal) + 1);
+            //}
+            //else
+            //{
+            //    newFileName = path;
+            //}
+
+            //if (!CheckFile(newFilePath, newFileName))
+            //{
+            //    using (StreamWriter file = File.CreateText(Path.Combine(newFilePath, newFileName)))
+            //    {
+            //        for (int i = 0; i < text.Count; i++)
+            //        {
+            //            file.WriteLine(string.Join(" ", text[i]));
+            //        }
+
+            //        Console.WriteLine($"File {newFileName} decrypted in folder DecryptedFiles.");
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine("File alredy exists.");
+            //}
         }
 
         private void DisplayCommands()
